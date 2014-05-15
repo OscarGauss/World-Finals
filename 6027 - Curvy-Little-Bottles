@@ -1,0 +1,537 @@
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <cmath>
+#include <bitset>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+typedef long long ll;
+typedef pair<int,int> ii;
+typedef pair<int,ii> iii;
+typedef vector<int> vi;
+typedef vector<ii> vii;
+
+#define INF 1000000000  //1 billon, safer than 2B for Floyd Warshall's
+#define ALL(x) x.begin(), x.end()   //Exmpl sort(ALL(V));
+
+/*Para la Lectura
+%c <-- char
+%d <-- int
+%f <-- float
+%lld <-- long long
+%llf <-- double
+ans = a ? b : c;  //if(a) ans = b; else ans = c;
+double pi = 2 * acos(0.0);
+printf("%.*lf \n",n,pi);    //print with n deco¡imals,this is the way to manipulate field width n is the decimals of the number
+cout<<pi<<endl;             //5 decimals for default with you use c_out     */
+///CodeBlocks: for save as (Alt+f a), for save (Crtl+s), for quit (Ctrl+w), for switch tabs Crtl+,
+
+int n;//degree of the polynomial
+double pi = 2 * acos(0.0);
+class Polinomy{
+    private:
+    double X0,X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17,X18,X19,X20,X21,X22,X23,X24,X25;
+    public:
+    Polinomy(){X0=X1=X2=X3=X4=X5=X6=X7=X8=X9=X10=X11=X12=X13=X14=X15=X16=X17=X18=X19=X20=X21=X22=X23=X24=X25=0.0;}
+    void setCoef(int i,double v){
+        switch (i){
+            case 0:
+                X0=v;
+                break;
+            case 1:
+                X1=v;
+                break;
+            case 2:
+                X2=v;
+                break;
+            case 3:
+                X3=v;
+                break;
+            case 4:
+                X4=v;
+                break;
+            case 5:
+                X5=v;
+                break;
+            case 6:
+                X6=v;
+                break;
+            case 7:
+                X7=v;
+                break;
+            case 8:
+                X8=v;
+                break;
+            case 9:
+                X9=v;
+                break;
+            case 10:
+                X10=v;
+                break;
+            case 11:
+                X11=v;
+                break;
+            case 12:
+                X12=v;
+                break;
+            case 13:
+                X13=v;
+                break;
+            case 14:
+                X14=v;
+                break;
+            case 15:
+                X15=v;
+                break;
+            case 16:
+                X16=v;
+                break;
+            case 17:
+                X17=v;
+                break;
+            case 18:
+                X18=v;
+                break;
+            case 19:
+                X19=v;
+                break;
+            case 20:
+                X20=v;
+                break;
+            case 21:
+                X21=v;
+                break;
+            case 22:
+                X22=v;
+                break;
+            case 23:
+                X23=v;
+                break;
+            case 24:
+                X24=v;
+                break;
+            case 25:
+                X25=v;
+                break;
+            default :
+                break;
+        }
+    }
+    double getCoef(int i){
+        switch (i){
+            case 0:
+                return X0;
+                break;
+            case 1:
+                return X1;
+                break;
+            case 2:
+                return X2;
+                break;
+            case 3:
+                return X3;
+                break;
+            case 4:
+                return X4;
+                break;
+            case 5:
+                return X5;
+                break;
+            case 6:
+                return X6;
+                break;
+            case 7:
+                return X7;
+                break;
+            case 8:
+                return X8;
+                break;
+            case 9:
+                return X9;
+                break;
+            case 10:
+                return X10;
+                break;
+            case 11:
+                return X11;
+                break;
+            case 12:
+                return X12;
+                break;
+            case 13:
+                return X13;
+                break;
+            case 14:
+                return X14;
+                break;
+            case 15:
+                return X15;
+                break;
+            case 16:
+                return X16;
+                break;
+            case 17:
+                return X17;
+                break;
+            case 18:
+                return X18;
+                break;
+            case 19:
+                return X19;
+                break;
+            case 20:
+                return X20;
+                break;
+            case 21:
+                return X21;
+                break;
+            case 22:
+                return X22;
+                break;
+            case 23:
+                return X23;
+                break;
+            case 24:
+                return X24;
+                break;
+            case 25:
+                return X25;
+                break;
+        }
+        return 0.0;
+    }
+    Polinomy Cuadrado(){
+        n*=2;n++;
+        Polinomy R;
+        // 0 1 2 3 4 5 6 7 8 9 10
+        // a b c d e f g h i j k
+        R.setCoef(0,getCoef(0)*getCoef(0));//a*a
+        R.setCoef(1,2*getCoef(0)*getCoef(1));//2ab
+        R.setCoef(2,(2*getCoef(0)*getCoef(2))+(getCoef(1)*getCoef(1)));//2ac+bb
+        R.setCoef(3,(2*getCoef(0)*getCoef(3))+(2*getCoef(1)*getCoef(2)));//2ad+2bc
+        R.setCoef(4,(2*getCoef(0)*getCoef(4))+(2*getCoef(1)*getCoef(3))+(getCoef(2)*getCoef(2)));//2ae+2bd+cc
+        R.setCoef(5,(2*getCoef(0)*getCoef(5))+(2*getCoef(1)*getCoef(4))+(2*getCoef(2)*getCoef(3)));//2af+2be+2cd
+        R.setCoef(6,(2*getCoef(0)*getCoef(6))+(2*getCoef(1)*getCoef(5))+(2*getCoef(2)*getCoef(4))+(getCoef(3)*getCoef(3)));//2ag+2bf+2ce+dd
+        R.setCoef(7,(2*getCoef(0)*getCoef(7))+(2*getCoef(1)*getCoef(6))+(2*getCoef(2)*getCoef(5))+(2*getCoef(3)*getCoef(4)));//2ah+2bg+2cf+2de
+        R.setCoef(8,(2*getCoef(0)*getCoef(8))+(2*getCoef(1)*getCoef(7))+(2*getCoef(2)*getCoef(6))+(2*getCoef(3)*getCoef(5))+(getCoef(4)*getCoef(4)));//2ai+2bh+2cg+2df+ee
+        R.setCoef(9,(2*getCoef(0)*getCoef(9))+(2*getCoef(1)*getCoef(8))+(2*getCoef(2)*getCoef(7))+(2*getCoef(3)*getCoef(6))+(2*getCoef(4)*getCoef(5)));//2aj+2bi+2ch+2dg+2ef
+        R.setCoef(10,(2*getCoef(0)*getCoef(10))+(2*getCoef(1)*getCoef(9))+(2*getCoef(2)*getCoef(8))+(2*getCoef(3)*getCoef(7))+(2*getCoef(4)*getCoef(6))+(getCoef(5)*getCoef(5)));//2ak+2bj+2ci+2dh+2eg+ff
+        R.setCoef(11,(2*getCoef(1)*getCoef(10))+(2*getCoef(2)*getCoef(9))+(2*getCoef(3)*getCoef(8))+(2*getCoef(4)*getCoef(7))+(2*getCoef(5)*getCoef(6)));//2bk+2cj+2di+2eh+2fg
+        R.setCoef(12,(2*getCoef(2)*getCoef(10))+(2*getCoef(3)*getCoef(9))+(2*getCoef(4)*getCoef(8))+(2*getCoef(5)*getCoef(7))+(getCoef(6)*getCoef(6)));//2ck+2dj+2ei+2fh+gg
+        R.setCoef(13,(2*getCoef(3)*getCoef(10))+(2*getCoef(4)*getCoef(9))+(2*getCoef(5)*getCoef(8))+(2*getCoef(6)*getCoef(7)));//2dk+2ej+2fi+2gh
+        R.setCoef(14,(2*getCoef(4)*getCoef(10))+(2*getCoef(5)*getCoef(9))+(2*getCoef(6)*getCoef(8))+(getCoef(7)*getCoef(7)));//2ek+2fj+2gi+hh
+        R.setCoef(15,(2*getCoef(5)*getCoef(10))+(2*getCoef(6)*getCoef(9))+(2*getCoef(7)*getCoef(8)));//2fk+2gj+2hi
+        R.setCoef(16,(2*getCoef(6)*getCoef(10))+(2*getCoef(7)*getCoef(9))+(getCoef(8)*getCoef(8)));//2gk+2hj+ii
+        R.setCoef(17,(2*getCoef(7)*getCoef(10))+(2*getCoef(8)*getCoef(9)));//2hk+2ij
+        R.setCoef(18,(2*getCoef(8)*getCoef(10))+(getCoef(9)*getCoef(9)));//2ki+jj
+        R.setCoef(19,2*getCoef(9)*getCoef(10));//2jk
+        R.setCoef(20,getCoef(10)*getCoef(10));//kk
+        return R;
+    }
+    void mostrar(){
+        for(int i=0;i<=n;i++){
+            cout<<getCoef(i)<<"X"<<i<<" + ";
+            //printf("%llf x %d+",getCoef(i),i);
+        }printf("\n");
+    }
+};
+
+class PolinomyString{
+    private:
+    string X0,X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17,X18,X19,X20,X21,X22,X23,X24,X25;
+    public:
+    PolinomyString(){X0=X1=X2=X3=X4=X5=X6=X7=X8=X9=X10=X11=X12=X13=X14=X15=X16=X17=X18=X19=X20=X21=X22=X23=X24=X25="vacio";}
+    void setCoef(int i,string n){
+        switch (i){
+            case 0:
+                X0=n;
+                break;
+            case 1:
+                X1=n;
+                break;
+            case 2:
+                X2=n;
+                break;
+            case 3:
+                X3=n;
+                break;
+            case 4:
+                X4=n;
+                break;
+            case 5:
+                X5=n;
+                break;
+            case 6:
+                X6=n;
+                break;
+            case 7:
+                X7=n;
+                break;
+            case 8:
+                X8=n;
+                break;
+            case 9:
+                X9=n;
+                break;
+            case 10:
+                X10=n;
+                break;
+            case 11:
+                X11=n;
+                break;
+            case 12:
+                X12=n;
+                break;
+            case 13:
+                X13=n;
+                break;
+            case 14:
+                X14=n;
+                break;
+            case 15:
+                X15=n;
+                break;
+            case 16:
+                X16=n;
+                break;
+            case 17:
+                X17=n;
+                break;
+            case 18:
+                X18=n;
+                break;
+            case 19:
+                X19=n;
+                break;
+            case 20:
+                X20=n;
+                break;
+            case 21:
+                X21=n;
+                break;
+            case 22:
+                X22=n;
+                break;
+            case 23:
+                X23=n;
+                break;
+            case 24:
+                X24=n;
+                break;
+            case 25:
+                X25=n;
+                break;
+            default :
+                break;
+        }
+    }
+    string getCoef(int i){
+        switch (i){
+            case 0:
+                return X0;
+                break;
+            case 1:
+                return X1;
+                break;
+            case 2:
+                return X2;
+                break;
+            case 3:
+                return X3;
+                break;
+            case 4:
+                return X4;
+                break;
+            case 5:
+                return X5;
+                break;
+            case 6:
+                return X6;
+                break;
+            case 7:
+                return X7;
+                break;
+            case 8:
+                return X8;
+                break;
+            case 9:
+                return X9;
+                break;
+            case 10:
+                return X10;
+                break;
+            case 11:
+                return X11;
+                break;
+            case 12:
+                return X12;
+                break;
+            case 13:
+                return X13;
+                break;
+            case 14:
+                return X14;
+                break;
+            case 15:
+                return X15;
+                break;
+            case 16:
+                return X16;
+                break;
+            case 17:
+                return X17;
+                break;
+            case 18:
+                return X18;
+                break;
+            case 19:
+                return X19;
+                break;
+            case 20:
+                return X20;
+                break;
+            case 21:
+                return X21;
+                break;
+            case 22:
+                return X22;
+                break;
+            case 23:
+                return X23;
+                break;
+            case 24:
+                return X24;
+                break;
+            case 25:
+                return X25;
+                break;
+        }
+        return "";
+    }
+    PolinomyString CrearCuadradoImpresion(){
+        PolinomyString R;
+        // 0 1 2 3 4 5 6 7 8 9 10
+        // a b c d e f g h i j k
+        R.setCoef(0,getCoef(0)+getCoef(0));                                 //a*a
+        R.setCoef(1,"2"+getCoef(0)+getCoef(1));                             //2ab
+        R.setCoef(2,"2"+getCoef(0)+getCoef(2)+"+"+getCoef(1)+getCoef(1));   //2ac+bb
+        R.setCoef(3,"2"+getCoef(0)+getCoef(3)+"+2"+getCoef(1)+getCoef(2));//2ad+2bc
+        R.setCoef(4,"2"+getCoef(0)+getCoef(4)+"+2"+getCoef(1)+getCoef(3)+"+"+getCoef(2)+getCoef(2));//2ae+2bd+cc
+        R.setCoef(5,"2"+getCoef(0)+getCoef(5)+"+2"+getCoef(1)+getCoef(4)+"+2"+getCoef(2)+getCoef(3));//2af+2be+2cd
+        R.setCoef(6,"2"+getCoef(0)+getCoef(6)+"+2"+getCoef(1)+getCoef(5)+"+2"+getCoef(2)+getCoef(4)+"+"+getCoef(3)+getCoef(3));//2ag+2bf+2ce+dd
+        R.setCoef(7,"2"+getCoef(0)+getCoef(7)+"+2"+getCoef(1)+getCoef(6)+"+2"+getCoef(2)+getCoef(5)+"+2"+getCoef(3)+getCoef(4));//2ah+2bg+2cf+2de
+        R.setCoef(8,"2"+getCoef(0)+getCoef(8)+"+2"+getCoef(1)+getCoef(7)+"+2"+getCoef(2)+getCoef(6)+"+2"+getCoef(3)+getCoef(5)+"+"+getCoef(4)+getCoef(4));//2ai+2bh+2cg+2df+ee
+        R.setCoef(9,"2"+getCoef(0)+getCoef(9)+"+2"+getCoef(1)+getCoef(8)+"+2"+getCoef(2)+getCoef(7)+"+2"+getCoef(3)+getCoef(6)+"+2"+getCoef(4)+getCoef(5));//2aj+2bi+2ch+2dg+2ef
+        R.setCoef(10,"2"+getCoef(0)+getCoef(10)+"+2"+getCoef(1)+getCoef(9)+"+2"+getCoef(2)+getCoef(8)+"+2"+getCoef(3)+getCoef(7)+"+2"+getCoef(4)+getCoef(6)+"+"+getCoef(5)+getCoef(5));//2ak+2bj+2ci+2dh+2eg+ff
+        R.setCoef(11,"2"+getCoef(1)+getCoef(10)+"+2"+getCoef(2)+getCoef(9)+"+2"+getCoef(3)+getCoef(8)+"+2"+getCoef(4)+getCoef(7)+"+2"+getCoef(5)+getCoef(6));//2bk+2cj+2di+2eh+2fg
+        R.setCoef(12,"2"+getCoef(2)+getCoef(10)+"+2"+getCoef(3)+getCoef(9)+"+2"+getCoef(4)+getCoef(8)+"+2"+getCoef(5)+getCoef(7)+"+"+getCoef(6)+getCoef(6));//2ck+2dj+2ei+2fh+gg
+        R.setCoef(13,"2"+getCoef(3)+getCoef(10)+"+2"+getCoef(4)+getCoef(9)+"+2"+getCoef(5)+getCoef(8)+"+2"+getCoef(6)+getCoef(7));//2dk+2ej+2fi+2gh
+        R.setCoef(14,"2"+getCoef(4)+getCoef(10)+"+2"+getCoef(5)+getCoef(9)+"+2"+getCoef(6)+getCoef(8)+"+"+getCoef(7)+getCoef(7));//2ek+2fj+2gi+hh
+        R.setCoef(15,"2"+getCoef(5)+getCoef(10)+"+2"+getCoef(6)+getCoef(9)+"+2"+getCoef(7)+getCoef(8));//2fk+2gj+2hi
+        R.setCoef(16,"2"+getCoef(6)+getCoef(10)+"+2"+getCoef(7)+getCoef(9)+"+"+getCoef(8)+getCoef(8));//2gk+2hj+ii
+        R.setCoef(17,"2"+getCoef(7)+getCoef(10)+"+2"+getCoef(8)+getCoef(9));//2hk+2ij
+        R.setCoef(18,"2"+getCoef(8)+getCoef(10)+"+"+getCoef(9)+getCoef(9));//2ki+jj
+        R.setCoef(19,"2"+getCoef(9)+getCoef(10));//2jk
+        R.setCoef(20,getCoef(10)+getCoef(10));//kk
+        /*//Brute Force
+        PolinomyString P1;
+        P1.setCoef(0,"a");P1.setCoef(1,"b");P1.setCoef(2,"c");P1.setCoef(3,"d");
+        P1.setCoef(4,"e");P1.setCoef(5,"f");P1.setCoef(6,"g");P1.setCoef(7,"h");
+        P1.setCoef(8,"i");P1.setCoef(9,"j");P1.setCoef(10,"k");
+        PolinomyString RE;
+        for(int i=0;i<=n;i++){
+            for(int j=0;j<=n;j++){
+                RE.setCoef(i+j,RE.getCoef(i+j)+"+"+P1.getCoef(i)+P1.getCoef(j) );
+            }
+        }
+        for(int i=0;i<=22;i++){
+            cout<<"X_"<<i<<" -->  "<<RE.getCoef(i)<<endl;
+        }//cout<<endl;*/
+        return R;
+    }
+
+};
+
+Polinomy Integrar(Polinomy x){
+    Polinomy y;
+    y.setCoef(0,0.0);
+    for(int i=1;i<=n;i++){
+        y.setCoef(i,x.getCoef(i-1)/i);
+    }
+    n++;
+    return y;
+}
+double Examinar(Polinomy p,double al,double bh){
+    double res=0.0;
+    for(int i=0;i<=n;i++){
+        res+=(p.getCoef(i)*pow(bh,i));
+    }
+    for(int i=0;i<=n;i++){
+        res-=(p.getCoef(i)*pow(al,i));
+    }
+    return res;
+}
+
+double BS(double lo,double hi,float e,Polinomy p){
+    double mid,pri=lo;
+    if(e>Examinar(p,lo,hi)*pi){return -99999;}
+    while(lo<hi){
+        mid=(lo+hi)/2;
+        float ex=Examinar(p,pri,mid)*pi;//Examniar siempre del lo lo no varaia solo mid
+        //cout<<lo<<" "<<mid<<" -> "<<ex<<endl;
+
+        if(ex==e){
+            return mid;
+        }
+        if(ex<e){
+            lo=mid;
+        }else{
+            hi=mid;
+        }
+        if(lo==hi){break;}
+    }
+    return lo;
+}
+int main()
+{
+    double xlow,xhigh,a;
+    int inc,c=1;
+    while(scanf("%d",&n)!=EOF){
+        Polinomy P;
+        for(int i=0;i<=n;i++){
+            //scanf("%llf",&a);
+            cin>>a;
+            P.setCoef(i,a);
+        }
+        P=P.Cuadrado();
+        P=Integrar(P);
+        cin>>xlow>>xhigh>>inc;
+        //scanf("%llf %llf %d",&xlow,&xhigh,&inc);
+        //printf("%llf %llf %d",xlow,xhigh,inc);
+        double tot=Examinar(P,xlow,xhigh)*pi;
+        printf("Case %d: %.*lf\n",c,2,tot);
+        //cout<<"Case "<<c<<": "<<tot<<endl;
+        double low=xlow,hig=xhigh,n1=0.0;
+        double Vecd[10];
+        int i=0;
+        for(i=0;n1<xhigh and i<8;i++){
+            n1=BS(low,xhigh,inc,P);
+            if(n1==-99999){break;}
+            Vecd[i]=n1-xlow;
+            low=n1;
+        }
+        if(i==0){cout<<"insufficient volume"<<endl;}
+        else{
+            for(int j=0;j<i;j++){
+                printf("%.*lf",2,Vecd[j]);
+                if(j<i-1){printf(" ");}
+            }printf("\n");
+        }
+        c++;
+    }
+    return 0;
+}
